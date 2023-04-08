@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+             http://www.springframework.org/schema/tx
+              http://www.springframework.org/schema/tx/spring-tx.xsd
+            http://www.springframework.org/schema/context/spring-context.xsd">
+            
+           <tx:annotation-driven />
+            
+             <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" name="ds">
+            <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+            <property name="url"  value="jdbc:mysql://localhost:3306/springorm"/>
+            <property name="username" value="root" />
+            <property name="password" value="admin" />	
+            </bean>
+        
+            <bean class="org.springframework.orm.hibernate5.LocalSessionFactoryBean"
+                      name="lsFactory">
+                      <!--datdasource-->
+            <Property name="dataSource" ref="ds"></Property>
+            <!--Hibernate Properties-->
+            <Property name="hibernateProperties>
+            <props>
+            <prop key="hibernate.dialect">org.hibernate.dialect.MySQL57Dialect</prop>
+            <prop key="hibernate.show_sql">true</prop>
+            <prop kry="hibernate.hbm2ddl.auto">update<prop>
+            </props>
+             <!--AnnotatedClass-->
+            </Property>
+            <Property name="annotatedClasses">
+            <list>
+            <value>com.DaoEntities.Student</value>
+            </list>
+            </Property>
+            </bean>
+         
+    
+     <bean class="org.springframework.orm.hibernate5.HibernateTemplate" name="hibernateTemplate">
+             <Property name="sessionFactoy" ref="lsFactory"></Property>
+             </bean>
+             <bean class="com.com.StudenntDao.StudentDao" name="studentDao">
+             <Property name="hibernateTemplate" ref="hibernateTemplate">
+             </bean>
+</beans>>
